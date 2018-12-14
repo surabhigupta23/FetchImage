@@ -13,31 +13,37 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageIcon: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        imageIcon.backgroundColor = UIColor.white
         }
 
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
+        fetchImageFromURL()
+    }
+
+    func fetchImageFromURL()
+    {
         //The image to download
         let remoteURLImage = URL(string: "https://solarianprogrammer.com/images/2013/02/28/mandelbrot_piece_Z2.png")!
         
         //Use alamofire to download the image
-        //        DispatchQueue.main.asyncAfter(deadline: .now() + 5){
-        print("Enter the delay\n ")
-        Alamofire.request(remoteURLImage).responseData {
-            (response) in
-            if response.error == nil
-            {
-                print("result: ",response.result)
-                //Show the downloaded image
-                if let data = response.data {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5){
+            print("Enter the delay\n ")
+            Alamofire.request(remoteURLImage).responseData {
+                (response) in
+                if response.error == nil
+                {
+                    print("result: ",response.result)
+                    //Show the downloaded image
+                    if let data = response.data {
+                        
+                        self.imageIcon.image = UIImage (data: data)
+                    }
                     
-                    self.imageIcon.image = UIImage (data: data)
                 }
-                
             }
         }
+    
     }
+
 }
-
-
